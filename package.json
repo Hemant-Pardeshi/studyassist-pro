@@ -1,0 +1,48 @@
+{
+    "name": "studyassist-pro",
+    "version": "1.0.0",
+    "description": "StudyAssist Pro - A comprehensive Chrome extension for students to highlight text, get word definitions, and take notes",
+    "scripts": {
+        "test": "jest",
+        "lint": "eslint *.js",
+        "lint:fix": "eslint *.js --fix",
+        "build": "node scripts/build.js",
+        "package": "node scripts/package.js",
+        "validate": "web-ext lint --source-dir=. --ignore-files='node_modules/**' --ignore-files='test.html' --ignore-files='.github/**'",
+        "start:firefox": "web-ext run --source-dir=. --ignore-files='node_modules/**'",
+        "zip": "node scripts/create-zip.js"
+    },
+    "keywords": [
+        "chrome-extension",
+        "education",
+        "studyassist",
+        "study-tools",
+        "highlighting",
+        "dictionary",
+        "notes",
+        "learning"
+    ],
+    "author": "Your Name",
+    "license": "MIT",
+    "devDependencies": {
+        "eslint": "^8.50.0",
+        "@eslint/js": "^8.50.0",
+        "eslint-config-prettier": "^9.0.0",
+        "web-ext": "^7.8.0",
+        "jest": "^29.7.0",
+        "puppeteer": "^21.3.0",
+        "archiver": "^6.0.1",
+        "jsonlint": "^1.6.3"
+    },
+    "engines": {
+        "node": ">=16.0.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/yourusername/studyassist-pro.git"
+    },
+    "bugs": {
+        "url": "https://github.com/yourusername/studyassist-pro/issues"
+    },
+    "homepage": "https://github.com/yourusername/studyassist-pro#readme"
+}

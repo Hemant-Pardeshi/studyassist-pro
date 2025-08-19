@@ -1,0 +1,435 @@
+/* Extension CSS styles */
+
+/* Highlight styles */
+.study-helper-highlight {
+    background-color: #ffeb3b !important;
+    padding: 1px 2px !important;
+    border-radius: 2px !important;
+    position: relative !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    border: 1px solid transparent !important;
+}
+
+.study-helper-highlight:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    transform: translateY(-1px) !important;
+    border-color: #f39c12 !important;
+}
+
+.study-helper-highlight:hover::after {
+    content: "Click to remove" !important;
+    position: absolute !important;
+    bottom: 100% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    color: white !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+    font-size: 11px !important;
+    white-space: nowrap !important;
+    z-index: 1000 !important;
+    pointer-events: none !important;
+}
+
+/* Definition tooltip */
+.study-helper-tooltip {
+    position: fixed !important;
+    z-index: 10000 !important;
+    background: white !important;
+    border: 1px solid #ddd !important;
+    border-radius: 8px !important;
+    padding: 15px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    color: #333 !important;
+    max-width: 320px !important;
+    min-width: 220px !important;
+    opacity: 0 !important;
+    transform: translateY(-10px) scale(0.95) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 2px solid rgba(52, 152, 219, 0.2) !important;
+    pointer-events: none !important;
+}
+
+.study-helper-tooltip.show {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+    pointer-events: auto !important;
+}
+
+.study-helper-tooltip::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -10px !important;
+    left: 20px !important;
+    width: 0 !important;
+    height: 0 !important;
+    border-left: 10px solid transparent !important;
+    border-right: 10px solid transparent !important;
+    border-bottom: 10px solid white !important;
+    filter: drop-shadow(0 -2px 4px rgba(0, 0, 0, 0.1)) !important;
+}
+
+.tooltip-word {
+    font-weight: bold !important;
+    color: #2c3e50 !important;
+    margin-bottom: 8px !important;
+    font-size: 16px !important;
+}
+
+.tooltip-phonetic {
+    color: #7f8c8d !important;
+    font-style: italic !important;
+    margin-bottom: 5px !important;
+}
+
+.tooltip-pos {
+    background: #ecf0f1 !important;
+    color: #2c3e50 !important;
+    padding: 2px 8px !important;
+    border-radius: 12px !important;
+    font-size: 12px !important;
+    display: inline-block !important;
+    margin-bottom: 8px !important;
+}
+
+.tooltip-definition {
+    margin-bottom: 10px !important;
+    color: #2c3e50 !important;
+}
+
+.tooltip-example {
+    font-style: italic !important;
+    color: #7f8c8d !important;
+    margin-bottom: 8px !important;
+    padding-left: 10px !important;
+    border-left: 3px solid #bdc3c7 !important;
+}
+
+.tooltip-synonyms {
+    font-size: 12px !important;
+    color: #3498db !important;
+}
+
+.tooltip-close {
+    position: absolute !important;
+    top: 8px !important;
+    right: 8px !important;
+    background: none !important;
+    border: none !important;
+    font-size: 18px !important;
+    cursor: pointer !important;
+    color: #bdc3c7 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+}
+
+.tooltip-close:hover {
+    color: #e74c3c !important;
+}
+
+/* Notes panel */
+.study-helper-notes-panel {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 300px !important;
+    max-height: 500px !important;
+    background: white !important;
+    border: 1px solid #ddd !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    z-index: 9999 !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    transition: all 0.3s ease !important;
+    overflow: hidden !important;
+}
+
+.study-helper-notes-panel.minimized {
+    height: 50px !important;
+    max-height: 50px !important;
+}
+
+.notes-header {
+    background: linear-gradient(135deg, #3498db, #2980b9) !important;
+    color: white !important;
+    padding: 12px 15px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    cursor: pointer !important;
+    user-select: none !important;
+}
+
+.notes-title {
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.notes-controls {
+    display: flex !important;
+    gap: 5px !important;
+}
+
+.notes-btn {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: none !important;
+    color: white !important;
+    width: 24px !important;
+    height: 24px !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 12px !important;
+    transition: background-color 0.2s !important;
+}
+
+.notes-btn:hover {
+    background: rgba(255, 255, 255, 0.3) !important;
+}
+
+.notes-content {
+    padding: 15px !important;
+    max-height: 400px !important;
+    overflow-y: auto !important;
+}
+
+.notes-input-area {
+    margin-bottom: 15px !important;
+}
+
+.notes-textarea {
+    width: 100% !important;
+    min-height: 80px !important;
+    padding: 10px !important;
+    border: 1px solid #ddd !important;
+    border-radius: 6px !important;
+    font-family: inherit !important;
+    font-size: 13px !important;
+    resize: vertical !important;
+    outline: none !important;
+    transition: border-color 0.2s !important;
+    box-sizing: border-box !important;
+}
+
+.notes-textarea:focus {
+    border-color: #3498db !important;
+}
+
+.notes-add-btn {
+    background: #3498db !important;
+    color: white !important;
+    border: none !important;
+    padding: 8px 16px !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    transition: background-color 0.2s !important;
+    width: 100% !important;
+}
+
+.notes-add-btn:hover {
+    background: #2980b9 !important;
+}
+
+.notes-add-btn:disabled {
+    background: #bdc3c7 !important;
+    cursor: not-allowed !important;
+}
+
+.notes-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+}
+
+.note-item {
+    background: #f8f9fa !important;
+    border: 1px solid #e9ecef !important;
+    border-radius: 6px !important;
+    padding: 10px !important;
+    position: relative !important;
+    transition: all 0.2s ease !important;
+}
+
+.note-item:hover {
+    background: #e9ecef !important;
+    border-color: #3498db !important;
+}
+
+.note-text {
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    color: #2c3e50 !important;
+    margin-bottom: 8px !important;
+    word-wrap: break-word !important;
+}
+
+.note-meta {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    font-size: 11px !important;
+    color: #7f8c8d !important;
+}
+
+.note-timestamp {
+    font-style: italic !important;
+}
+
+.note-delete {
+    background: #e74c3c !important;
+    color: white !important;
+    border: none !important;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    font-size: 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: background-color 0.2s !important;
+}
+
+.note-delete:hover {
+    background: #c0392b !important;
+}
+
+.notes-empty {
+    text-align: center !important;
+    color: #7f8c8d !important;
+    font-size: 12px !important;
+    padding: 20px !important;
+    font-style: italic !important;
+}
+
+/* Selection highlight effect */
+.study-helper-selection {
+    background: rgba(52, 152, 219, 0.3) !important;
+    animation: selection-pulse 0.5s ease-out !important;
+}
+
+@keyframes selection-pulse {
+    0% {
+        background: rgba(52, 152, 219, 0.6) !important;
+    }
+
+    100% {
+        background: rgba(52, 152, 219, 0.3) !important;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .study-helper-notes-panel {
+        width: calc(100vw - 40px) !important;
+        max-width: 300px !important;
+    }
+
+    .study-helper-tooltip {
+        max-width: calc(100vw - 40px) !important;
+    }
+}
+
+/* Loading spinner */
+.loading-spinner {
+    border: 2px solid #f3f3f3 !important;
+    border-top: 2px solid #3498db !important;
+    border-radius: 50% !important;
+    width: 20px !important;
+    height: 20px !important;
+    animation: spin 1s linear infinite !important;
+    margin: 0 auto !important;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg) !important;
+    }
+
+    100% {
+        transform: rotate(360deg) !important;
+    }
+}
+
+/* Enhanced tooltip styles */
+.loading-tooltip {
+    background: #3498db !important;
+    color: white !important;
+    border: none !important;
+}
+
+.loading-tooltip::before {
+    border-bottom-color: #3498db !important;
+}
+
+.error-tooltip {
+    background: #ffebee !important;
+    border-color: #f44336 !important;
+}
+
+.error-tooltip::before {
+    border-bottom-color: #ffebee !important;
+}
+
+.definition-tooltip .tooltip-footer {
+    font-size: 11px !important;
+    color: #95a5a6 !important;
+    font-style: italic !important;
+    margin-top: 10px !important;
+    text-align: center !important;
+    border-top: 1px solid #ecf0f1 !important;
+    padding-top: 8px !important;
+}
+
+/* Improved highlighting animation */
+.study-helper-highlight {
+    animation: highlight-appear 0.3s ease-out !important;
+}
+
+@keyframes highlight-appear {
+    0% {
+        background-color: rgba(255, 235, 59, 0.3) !important;
+        transform: scale(1.05) !important;
+    }
+
+    50% {
+        background-color: rgba(255, 235, 59, 0.8) !important;
+    }
+
+    100% {
+        background-color: #ffeb3b !important;
+        transform: scale(1) !important;
+    }
+}
+
+/* Better tooltip positioning arrow */
+.study-helper-tooltip.top::before {
+    top: auto !important;
+    bottom: -10px !important;
+    border-top: 10px solid white !important;
+    border-bottom: none !important;
+    border-left: 10px solid transparent !important;
+    border-right: 10px solid transparent !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1)) !important;
+}
+
+.study-helper-tooltip.top.error-tooltip::before {
+    border-top-color: #ffebee !important;
+}
+
+.study-helper-tooltip.top.loading-tooltip::before {
+    border-top-color: #3498db !important;
+}

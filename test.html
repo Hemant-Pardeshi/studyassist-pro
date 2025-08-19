@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyAssist Pro Test Page</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+
+        .content {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 5px;
+        }
+
+        .instruction {
+            background: #d4edda;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .word {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <h1>StudyAssist Pro Test Page</h1>
+
+        <div class="instruction">
+            <strong>Instructions:</strong>
+            <ul>
+                <li>📝 <strong>Highlight text:</strong> Select any text with your mouse</li>
+                <li>📖 <strong>Get definitions:</strong> Double-click on any word (tooltip should appear right next to
+                    the word)</li>
+                <li>⌨️ <strong>Keyboard shortcut:</strong> Select text and press Ctrl+D (Cmd+D on Mac)</li>
+                <li>🗑️ <strong>Remove highlights:</strong> Click on highlighted text</li>
+                <li>🎯 <strong>Test positioning:</strong> Try double-clicking words at different positions (top, middle,
+                    bottom of page)</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h2>Sample Text for Testing</h2>
+            <p>
+                The <span class="word">extraordinary</span> phenomenon of <span class="word">bioluminescence</span>
+                allows certain organisms to produce their own light through chemical reactions. This remarkable
+                <span class="word">adaptation</span> serves various purposes including communication, predation,
+                and defense mechanisms.
+            </p>
+
+            <p>
+                Many marine creatures exhibit this <span class="word">fascinating</span> trait. Jellyfish use
+                bioluminescence to confuse predators, while fireflies utilize it for mating displays. The
+                <span class="word">biochemical</span> process involves luciferin, a light-emitting compound,
+                and luciferase, an enzyme that catalyzes the reaction.
+            </p>
+        </div>
+
+        <div class="test-section">
+            <h2>Words to Test Definitions</h2>
+            <p>
+                Try double-clicking on these words:
+                <span class="word">serendipity</span>,
+                <span class="word">ephemeral</span>,
+                <span class="word">ubiquitous</span>,
+                <span class="word">mellifluous</span>,
+                <span class="word">perspicacious</span>,
+                <span class="word">quintessential</span>.
+            </p>
+        </div>
+
+        <div class="test-section">
+            <h2>Technical Terms</h2>
+            <p>
+                Modern <span class="word">algorithms</span> utilize <span class="word">machine learning</span>
+                to process vast amounts of data. <span class="word">Artificial intelligence</span> systems
+                can now perform <span class="word">sophisticated</span> tasks that were once thought
+                impossible for computers.
+            </p>
+        </div>
+
+        <div class="test-section">
+            <h2>Simple Words</h2>
+            <p>
+                Test with common words too: <span class="word">beautiful</span>, <span class="word">amazing</span>,
+                <span class="word">wonderful</span>, <span class="word">excellent</span>, <span
+                    class="word">brilliant</span>.
+            </p>
+        </div>
+
+        <div class="instruction">
+            <strong>Expected Behavior:</strong>
+            <ul>
+                <li>✅ Double-clicking should show definition popup immediately</li>
+                <li>✅ Definition popup should appear right next to the clicked word</li>
+                <li>✅ Popup should automatically reposition if it would go off-screen</li>
+                <li>✅ Selected text should be highlighted with yellow background</li>
+                <li>✅ Loading spinner should appear while fetching definitions</li>
+                <li>✅ Error messages should show for invalid words</li>
+                <li>✅ Clicking highlighted text should remove the highlight</li>
+                <li>✅ Smooth animations for all interactions</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

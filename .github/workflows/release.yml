@@ -1,0 +1,224 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., v1.0.1)'
+        required: true
+        default: 'v1.0.1'
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+      
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Get version
+      id: get_version
+      run: |
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+        else
+          echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+        fi
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Update version in manifest
+      run: |
+        VERSION=${{ steps.get_version.outputs.VERSION }}
+        VERSION_NUMBER=${VERSION#v}
+        
+        # Update manifest.json version
+        node -e "
+        const fs = require('fs');
+        const manifest = JSON.parse(fs.readFileSync('manifest.json', 'utf8'));
+        manifest.version = '${VERSION_NUMBER}';
+        fs.writeFileSync('manifest.json', JSON.stringify(manifest, null, 2));
+        console.log('Updated version to:', manifest.version);
+        "
+        
+    - name: Generate changelog
+      run: |
+        echo "# Changelog for ${{ steps.get_version.outputs.VERSION }}" > CHANGELOG.md
+        echo "" >> CHANGELOG.md
+        echo "## What's New" >> CHANGELOG.md
+        echo "" >> CHANGELOG.md
+        
+        # Get commits since last tag
+        if git describe --tags --abbrev=0 HEAD~1 2>/dev/null; then
+          LAST_TAG=$(git describe --tags --abbrev=0 HEAD~1)
+          echo "Changes since $LAST_TAG:" >> CHANGELOG.md
+          git log --pretty=format:"- %s" $LAST_TAG..HEAD >> CHANGELOG.md
+        else
+          echo "- Initial release" >> CHANGELOG.md
+          echo "- Text highlighting functionality" >> CHANGELOG.md
+          echo "- Word definition lookup with double-click" >> CHANGELOG.md
+          echo "- Keyboard shortcuts (Ctrl+D / Cmd+D)" >> CHANGELOG.md
+          echo "- Smart tooltip positioning" >> CHANGELOG.md
+          echo "- Note-taking capabilities" >> CHANGELOG.md
+          echo "- Highlight management" >> CHANGELOG.md
+        fi
+        
+        echo "" >> CHANGELOG.md
+        echo "## Features" >> CHANGELOG.md
+        echo "- 📝 **Text Highlighting**: Select text to highlight it" >> CHANGELOG.md
+        echo "- 📖 **Word Definitions**: Double-click any word for instant definitions" >> CHANGELOG.md
+        echo "- ⌨️ **Keyboard Shortcuts**: Use Ctrl+D (Cmd+D) for quick definitions" >> CHANGELOG.md
+        echo "- 🎯 **Smart Positioning**: Tooltips appear right next to clicked words" >> CHANGELOG.md
+        echo "- 💾 **Persistent Storage**: Highlights and notes are saved per website" >> CHANGELOG.md
+        echo "- 🎨 **Smooth Animations**: Beautiful transitions and visual feedback" >> CHANGELOG.md
+        echo "- 🔒 **Privacy Focused**: All data stored locally, no tracking" >> CHANGELOG.md
+        
+    - name: Build extension
+      run: |
+        mkdir -p release
+        
+        # Copy extension files
+        cp manifest.json release/
+        cp background.js release/
+        cp content.js release/
+        cp styles.css release/
+        cp popup.html release/ 2>/dev/null || echo "popup.html not found"
+        cp popup.js release/ 2>/dev/null || echo "popup.js not found"
+        cp -r icons release/ 2>/dev/null || echo "icons directory not found"
+        
+        # Create README for the release
+        cat > release/README.md << 'EOF'
+        # StudyAssist Pro - Chrome Extension
+        
+        A comprehensive tool for students to highlight text, get word definitions, and take notes on web pages.
+        
+        ## Installation Instructions
+        
+        ### From Chrome Web Store (Recommended)
+        1. Go to the Chrome Web Store
+        2. Search for "StudyAssist Pro"
+        3. Click "Add to Chrome"
+        
+        ### Manual Installation (Developer Mode)
+        1. Download and extract the extension files
+        2. Open Chrome and go to `chrome://extensions/`
+        3. Enable "Developer mode" in the top right
+        4. Click "Load unpacked" and select the extension folder
+        
+        ## How to Use
+        
+        1. **Highlight Text**: Select any text on a webpage to highlight it
+        2. **Get Definitions**: Double-click on any word to see its definition
+        3. **Keyboard Shortcut**: Select text and press Ctrl+D (Cmd+D on Mac)
+        4. **Remove Highlights**: Click on highlighted text to remove it
+        5. **Take Notes**: Use the notes panel to add comments about the page
+        
+        ## Privacy
+        
+        This extension stores all data locally on your device. No information is sent to external servers except for dictionary API requests.
+        EOF
+        
+        # Create ZIP package
+        cd release
+        zip -r ../studyassist-pro-${{ steps.get_version.outputs.VERSION }}.zip .
+        
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.get_version.outputs.VERSION }}
+        release_name: StudyAssist Pro ${{ steps.get_version.outputs.VERSION }}
+        body_path: CHANGELOG.md
+        draft: false
+        prerelease: false
+        
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./studyassist-pro-${{ steps.get_version.outputs.VERSION }}.zip
+        asset_name: studyassist-pro-${{ steps.get_version.outputs.VERSION }}.zip
+        asset_content_type: application/zip
+
+  publish-chrome-store:
+    runs-on: ubuntu-latest
+    needs: create-release
+    if: github.event_name == 'push'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Chrome Web Store publish
+      run: |
+        echo "🏪 Chrome Web Store publishing setup"
+        echo "This would typically require:"
+        echo "1. Chrome Web Store API credentials"
+        echo "2. Extension ID from the store"
+        echo "3. OAuth tokens"
+        echo ""
+        echo "For now, this is a placeholder for future implementation"
+        echo "Manual steps:"
+        echo "1. Download the release ZIP"
+        echo "2. Go to Chrome Developer Dashboard"
+        echo "3. Upload the new version"
+        echo "4. Submit for review"
+        
+    - name: Generate store description
+      run: |
+        cat > store-description.md << 'EOF'
+        # Chrome Web Store Description
+        
+        ## Short Description
+        A powerful study tool for highlighting text, getting word definitions, and taking notes on any webpage.
+        
+        ## Detailed Description
+                StudyAssist Pro is the ultimate browser extension for students, researchers, and anyone who wants to enhance their reading and learning experience online.
+        
+        ### Key Features:
+        ✅ **Instant Text Highlighting** - Simply select text to highlight it with a beautiful yellow marker
+        ✅ **Quick Word Definitions** - Double-click any word to get instant definitions from a comprehensive dictionary
+        ✅ **Keyboard Shortcuts** - Use Ctrl+D (Cmd+D on Mac) for lightning-fast definition lookups
+        ✅ **Smart Positioning** - Definition popups appear right next to the word you clicked
+        ✅ **Note Taking** - Add personal notes to any webpage for future reference
+        ✅ **Data Privacy** - All your highlights and notes are stored locally on your device
+        ✅ **Beautiful Animations** - Smooth, polished interface that doesn't distract from your reading
+        
+        ### Perfect For:
+        📚 Students studying online materials
+        📖 Researchers reading academic papers
+        🌐 Language learners exploring web content
+        📝 Anyone who takes notes while browsing
+        
+        ### How It Works:
+        1. Install the extension
+        2. Visit any webpage
+        3. Select text to highlight it automatically
+        4. Double-click words for instant definitions
+        5. Use the note panel to jot down thoughts
+        
+        ### Privacy First:
+        We believe your study materials should remain private. This extension stores everything locally on your device and only connects to dictionary services when you request a definition.
+        
+        Transform your browsing into an active learning experience with StudyAssist Pro!
+        EOF
+        
+    - name: Upload store assets
+      uses: actions/upload-artifact@v4
+      with:
+        name: chrome-store-assets-${{ github.sha }}
+        path: store-description.md
+        retention-days: 30
